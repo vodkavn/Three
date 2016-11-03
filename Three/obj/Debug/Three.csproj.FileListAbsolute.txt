@@ -1,0 +1,6 @@
+C:\wamp64\www\Three\Three\bin\Three.dll.config
+C:\wamp64\www\Three\Three\bin\Three.dll
+C:\wamp64\www\Three\Three\bin\Three.pdb
+C:\wamp64\www\Three\Three\obj\Debug\Three.dll
+C:\wamp64\www\Three\Three\obj\Debug\Three.pdb
+C:\wamp64\www\Three\Three\obj\Debug\Three.csprojResolveAssemblyReference.cache
