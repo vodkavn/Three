@@ -1,17 +1,20 @@
 ﻿// Game scene
 class Scene {
-    constructor(_game) {
+    constructor(_game: Phaser.Game, _ui: UI) {
         this.game = _game;
+        this.ui = _ui;
         this.blockList = new Phaser.Group(_game);
+        this.blockList.y = UI_SIZE;
     }
 
     game: Phaser.Game;
+    ui: UI;
     blockList: Phaser.Group;
 
     // Add blocks
     // Call on init game
     addBlock() {
-        this.blockList.add(new Block(this.game, this, 0, 0, 1));
+        this.blockList.add(new Block(this.game, this, this.ui, 0, 0, 1));
     }
 
     // Add block at random position
@@ -31,7 +34,7 @@ class Scene {
             _y = Math.floor(Math.random() * MAP_SIZE);
             _value = Math.floor(Math.random() * 3) + 1;
         } while (this.getBlock(_x, _y));
-        this.blockList.add(new Block(this.game, this, _x, _y, _value));
+        this.blockList.add(new Block(this.game, this, this.ui, _x, _y, _value));
     }
 
     // Add random block on edge depend on last key pressed
@@ -73,7 +76,7 @@ class Scene {
         _x = _temp_x;
         _y = _temp_y;
         _value = Math.floor(Math.random() * 3) + 1;
-        this.blockList.add(new Block(this.game, this, _x, _y, _value));
+        this.blockList.add(new Block(this.game, this, this.ui, _x, _y, _value));
         last_key_pressed = 0;
     }
 
@@ -187,6 +190,8 @@ class Scene {
     // After moving blocks, there's something need to be done!!
     afterMove() {
         if (move_flag) {
+            // Add move count
+            this.ui.addMoveCount();
             this.removeStackedBlocks();
             this.addRandomBlockOnEdge();
             move_flag = 0;
@@ -197,6 +202,7 @@ class Scene {
             input_flag = 1;
         } else {
             console.log("GAMEOVER")
+            this.ui.showWarning("GAMEOVER");
         }
     }
 

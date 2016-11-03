@@ -6,7 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 // Block extend from Sprite to have full properies and methods from Sprite
 var Block = (function (_super) {
     __extends(Block, _super);
-    function Block(_game, _scene, _pos_x, _pos_y, _value) {
+    function Block(_game, _scene, _ui, _pos_x, _pos_y, _value) {
         if (_pos_x === void 0) { _pos_x = 0; }
         if (_pos_y === void 0) { _pos_y = 0; }
         if (_value === void 0) { _value = 0; }
@@ -25,6 +25,7 @@ var Block = (function (_super) {
         _super.call(this, _game, GRID_SIZE * _pos_x, GRID_SIZE * _pos_y, _color);
         this.game = _game;
         this.scene = _scene;
+        this.ui = _ui;
         this.id = BLOCK_ID++;
         this.value = _value;
         this.color = _color;
@@ -130,6 +131,8 @@ var Block = (function (_super) {
         this.loadTexture(this.color, 0);
         var label = this.children[0];
         label.text = this.value;
+        // Add point
+        this.ui.addPointCount(this.value);
     };
     Block.prototype.haveAfterPosition = function () {
         return this.after_x != null && this.after_y != null;

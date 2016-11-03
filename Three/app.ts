@@ -1,11 +1,12 @@
 ﻿class ThreeGame {
 
     constructor() {
-        this.game = new Phaser.Game(GRID_SIZE * MAP_SIZE, GRID_SIZE * MAP_SIZE, Phaser.AUTO, 'content', { preload: this.preload, create: this.create, update: this.update });
+        this.game = new Phaser.Game(GRID_SIZE * MAP_SIZE, GRID_SIZE * MAP_SIZE + UI_SIZE, Phaser.AUTO, 'content', { preload: this.preload, create: this.create, update: this.update });
     }
 
     game: Phaser.Game;
     scene: Scene;
+    ui: UI;
 
     preload() {
         this.game.load.image('white', 'resource/white.png');
@@ -15,8 +16,8 @@
 
 
     create() {
-        this.scene = new Scene(this.game);
-        //this.scene.addBlock();
+        this.ui = new UI(this.game);
+        this.scene = new Scene(this.game, this.ui);
         this.scene.addRandomBlock();
     }
 
@@ -37,6 +38,7 @@
 }
 
 // CONSTANTS
+var UI_SIZE = 150; // Size of UI part
 var GRID_SIZE = 100; // Size of one grid
 var MAP_SIZE = 4; // Map size by grid
 var KEY_UP = 1;
@@ -46,6 +48,9 @@ var KEY_LEFT = 4;
 var ANIMATION_TIME = 200; //ms
 var FONT_SIZE = 40; // Size of text on block
 var STYLE = { font: FONT_SIZE + "px Arial", fill: "#000000" };
+var FONT_SIZE_LABEL = 35; // Size of text on ui
+var STYLE_LABEL = { font: FONT_SIZE_LABEL + "px Arial", fill: "#FFFFFF" };
+var STYLE_LABEL_WARNING = { font: FONT_SIZE_LABEL + "px Arial", fill: "#FF0000" };
 var BLOCK_ID = 1; // Track block
 
 // Flags and Global variables

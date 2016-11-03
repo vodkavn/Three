@@ -38,11 +38,14 @@
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="block.ts" />
+    <TypeScriptCompile Include="label.ts" />
     <TypeScriptCompile Include="lib\linq.ts" />
     <TypeScriptCompile Include="lib\p2.d.ts" />
     <TypeScriptCompile Include="lib\phaser.d.ts" />
     <TypeScriptCompile Include="lib\pixi.d.ts" />
     <TypeScriptCompile Include="scene.ts" />
+    <TypeScriptCompile Include="ui.ts" />
+    <TypeScriptCompile Include="warning.ts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="web.Debug.config">

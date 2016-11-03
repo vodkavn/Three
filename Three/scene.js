@@ -1,13 +1,15 @@
 // Game scene
 var Scene = (function () {
-    function Scene(_game) {
+    function Scene(_game, _ui) {
         this.game = _game;
+        this.ui = _ui;
         this.blockList = new Phaser.Group(_game);
+        this.blockList.y = UI_SIZE;
     }
     // Add blocks
     // Call on init game
     Scene.prototype.addBlock = function () {
-        this.blockList.add(new Block(this.game, this, 0, 0, 1));
+        this.blockList.add(new Block(this.game, this, this.ui, 0, 0, 1));
     };
     // Add block at random position
     Scene.prototype.addRandomBlock = function () {
@@ -25,7 +27,7 @@ var Scene = (function () {
             _y = Math.floor(Math.random() * MAP_SIZE);
             _value = Math.floor(Math.random() * 3) + 1;
         } while (this.getBlock(_x, _y));
-        this.blockList.add(new Block(this.game, this, _x, _y, _value));
+        this.blockList.add(new Block(this.game, this, this.ui, _x, _y, _value));
     };
     // Add random block on edge depend on last key pressed
     Scene.prototype.addRandomBlockOnEdge = function () {
@@ -64,7 +66,7 @@ var Scene = (function () {
         _x = _temp_x;
         _y = _temp_y;
         _value = Math.floor(Math.random() * 3) + 1;
-        this.blockList.add(new Block(this.game, this, _x, _y, _value));
+        this.blockList.add(new Block(this.game, this, this.ui, _x, _y, _value));
         last_key_pressed = 0;
     };
     // Check if there is any block in (_x, _y) and return its
@@ -172,6 +174,8 @@ var Scene = (function () {
     // After moving blocks, there's something need to be done!!
     Scene.prototype.afterMove = function () {
         if (move_flag) {
+            // Add move count
+            this.ui.addMoveCount();
             this.removeStackedBlocks();
             this.addRandomBlockOnEdge();
             move_flag = 0;
@@ -182,6 +186,7 @@ var Scene = (function () {
         }
         else {
             console.log("GAMEOVER");
+            this.ui.showWarning("GAMEOVER");
         }
     };
     // Gameover check

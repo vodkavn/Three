@@ -1,7 +1,7 @@
 ﻿// Block extend from Sprite to have full properies and methods from Sprite
 class Block extends Phaser.Sprite {
 
-    constructor(_game: Phaser.Game, _scene: Scene, _pos_x = 0, _pos_y = 0, _value = 0) {
+    constructor(_game: Phaser.Game, _scene: Scene, _ui: UI, _pos_x = 0, _pos_y = 0, _value = 0) {
         var _color;
         switch (_value) {
             case 1:
@@ -17,6 +17,7 @@ class Block extends Phaser.Sprite {
         super(_game, GRID_SIZE * _pos_x, GRID_SIZE * _pos_y, _color);
         this.game = _game;
         this.scene = _scene;
+        this.ui = _ui;
         this.id = BLOCK_ID++;
         this.value = _value;
         this.color = _color;
@@ -34,6 +35,7 @@ class Block extends Phaser.Sprite {
     // Custom properties
     game: Phaser.Game;
     scene: Scene;
+    ui: UI;
     id;
     value;
     pos_x;
@@ -142,6 +144,8 @@ class Block extends Phaser.Sprite {
         this.loadTexture(this.color, 0);
         var label = this.children[0] as Phaser.Text;
         label.text = this.value;
+        // Add point
+        this.ui.addPointCount(this.value);
     }
 
     haveAfterPosition() {
