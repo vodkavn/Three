@@ -107,6 +107,20 @@ var Block = (function (_super) {
             return this.currentPositionCheck(_x, _y);
         return this.after_x == _x && this.after_y == _y;
     };
+    Block.prototype.canCombineAroundBlocks = function () {
+        var aroundPositions = [
+            [this.pos_x - 1, this.pos_y],
+            [this.pos_x + 1, this.pos_y],
+            [this.pos_x, this.pos_y - 1],
+            [this.pos_x, this.pos_y + 1],
+        ];
+        for (var i in aroundPositions) {
+            var check = this.scene.getBlock(aroundPositions[i][0], aroundPositions[i][1]);
+            if (check && this.canCombineBlock(check))
+                return true;
+        }
+        return false;
+    };
     Block.prototype.canCombineBlock = function (block) {
         return (this.value + block.value == 3) || (this.value == block.value && this.value > 2);
     };

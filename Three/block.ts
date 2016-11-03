@@ -116,6 +116,22 @@ class Block extends Phaser.Sprite {
         return this.after_x == _x && this.after_y == _y;
     }
 
+    canCombineAroundBlocks() {
+        var aroundPositions = [
+            [this.pos_x - 1, this.pos_y],
+            [this.pos_x + 1, this.pos_y],
+            [this.pos_x, this.pos_y - 1],
+            [this.pos_x, this.pos_y + 1],
+        ];
+
+        for (var i in aroundPositions) {
+            var check = this.scene.getBlock(aroundPositions[i][0], aroundPositions[i][1]);
+            if (check && this.canCombineBlock(check))
+                return true;
+        }
+        return false;
+    }
+
     canCombineBlock(block: Block) {
         return (this.value + block.value == 3) || (this.value == block.value && this.value > 2);
     }

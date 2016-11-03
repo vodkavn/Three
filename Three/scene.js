@@ -176,8 +176,24 @@ var Scene = (function () {
             this.addRandomBlockOnEdge();
             move_flag = 0;
         }
-        // Enable flag to receive input again
-        input_flag = 1;
+        if (!this.isGameOver()) {
+            // Enable flag to receive input again
+            input_flag = 1;
+        }
+        else {
+            console.log("GAMEOVER");
+        }
+    };
+    // Gameover check
+    Scene.prototype.isGameOver = function () {
+        if (this.canAddBlocks())
+            return false;
+        for (var i in this.blockList.children) {
+            var block = this.blockList.children[i];
+            if (block.canCombineAroundBlocks())
+                return false;
+        }
+        return true;
     };
     return Scene;
 }());
