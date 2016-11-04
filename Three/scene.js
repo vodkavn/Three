@@ -5,6 +5,8 @@ var Scene = (function () {
         this.ui = _ui;
         this.blockList = new Phaser.Group(_game);
         this.blockList.y = UI_SIZE;
+        this.addRandomBlock();
+        this.getNextBlockValue();
     }
     // Add blocks
     // Call on init game
@@ -65,7 +67,8 @@ var Scene = (function () {
         } while (this.getBlock(_temp_x, _temp_y));
         _x = _temp_x;
         _y = _temp_y;
-        _value = Math.floor(Math.random() * 3) + 1;
+        _value = next_block_value ? next_block_value : Math.floor(Math.random() * 3) + 1;
+        next_block_value = 0;
         this.blockList.add(new Block(this.game, this, this.ui, _x, _y, _value));
         last_key_pressed = 0;
     };
@@ -178,6 +181,7 @@ var Scene = (function () {
             this.ui.addMoveCount();
             this.removeStackedBlocks();
             this.addRandomBlockOnEdge();
+            this.getNextBlockValue();
             move_flag = 0;
         }
         if (!this.isGameOver()) {
@@ -199,6 +203,44 @@ var Scene = (function () {
                 return false;
         }
         return true;
+    };
+    // Weight random
+    Scene.prototype.weightRandom = function (data, total) {
+        var rnd = Math.floor(Math.random() * total);
+        var result = null;
+        var check = 0;
+        for (var i in data) {
+            check += data[i][1];
+            if (check > rnd) {
+                result = data[i][0];
+                break;
+            }
+        }
+        return result;
+    };
+    // Get block type
+    Scene.prototype.getBlockTypeCount = function () {
+        var result = [0, 0, 0];
+        for (var i in this.blockList.children) {
+            var block = this.blockList.children[i];
+            if (block.value == BLOCK_VALUE_ONE)
+                result[0]++;
+            else if (block.value == BLOCK_VALUE_TWO)
+                result[1]++;
+            else
+                result[2]++;
+        }
+        return result;
+    };
+    // Random next block value
+    Scene.prototype.getNextBlockValue = function () {
+        var blockType = this.getBlockTypeCount();
+        next_block_value = this.weightRandom([
+            [BLOCK_VALUE_ONE, 5 - blockType[0]],
+            [BLOCK_VALUE_TWO, 5 - blockType[1]],
+            [BLOCK_VALUE_THREE, 3],
+        ], 13 - blockType[0] - blockType[1]);
+        console.log("Next value: " + next_block_value);
     };
     return Scene;
 }());

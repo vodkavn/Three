@@ -123,7 +123,7 @@ var Block = (function (_super) {
         return false;
     };
     Block.prototype.canCombineBlock = function (block) {
-        return (this.value + block.value == 3) || (this.value == block.value && this.value > 2);
+        return (this.value + block.value == BLOCK_VALUE_ONE + BLOCK_VALUE_TWO) || (this.value == block.value && this.value > BLOCK_VALUE_TWO);
     };
     Block.prototype.combineBlock = function (block) {
         this.value += block.value;

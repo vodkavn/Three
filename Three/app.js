@@ -10,7 +10,6 @@ var ThreeGame = (function () {
     ThreeGame.prototype.create = function () {
         this.ui = new UI(this.game);
         this.scene = new Scene(this.game, this.ui);
-        this.scene.addRandomBlock();
     };
     ThreeGame.prototype.update = function () {
         // Only register input if input_flag is ON
@@ -46,11 +45,15 @@ var FONT_SIZE_LABEL = 35; // Size of text on ui
 var STYLE_LABEL = { font: FONT_SIZE_LABEL + "px Arial", fill: "#FFFFFF" };
 var STYLE_LABEL_WARNING = { font: FONT_SIZE_LABEL + "px Arial", fill: "#FF0000" };
 var BLOCK_ID = 1; // Track block
+var BLOCK_VALUE_ONE = 1;
+var BLOCK_VALUE_TWO = 2;
+var BLOCK_VALUE_THREE = 3;
 // Flags and Global variables
 var input_flag = 1; // 1 = can input
 var move_flag = 0; // 1 = block was moved
 var game;
 var last_key_pressed = 0;
+var next_block_value = 0;
 window.onload = function () {
     game = new ThreeGame();
 };
